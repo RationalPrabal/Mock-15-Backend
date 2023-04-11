@@ -22,12 +22,12 @@ bcrypt.hash(req.body.password,5,async(err,hash)=>{
         let newUser= new userModel(req.body)
         await newUser.save()
 
-        res.send("user has been registered")
+        res.send("User has been registered")
     }
 })
     }
     catch{
-res.send("can not register the user")
+res.send("Can not register the user")
     }
 })
 
@@ -40,21 +40,22 @@ userRouter.post("/login",async(req,res)=>{
 let user= await userModel.find({email})
 if(user.length){
     bcrypt.compare(req.body.password,user[0].password,(err,result)=>{
-        if(err){
-            throw err
-        }
+   
         if(result){
             const token= jwt.sign({user:user[0]._id},"kanban")
             res.send({"token":token})
         }
+        if(err){
+            throw err
+        }
     })
 }
 else {
-    res.send("please enter correct email/password")
+    res.send("Please enter correct credentials")
 }
     }
     catch{
-res.send("can not login")
+res.send("Can not Login")
     }
 })
 

@@ -1,10 +1,15 @@
 const mongoose= require("mongoose")
 
+const subtaskSchema= mongoose.Schema({
+    title : String,
+	isCompleted : Boolean
+})
 const taskSchema= mongoose.Schema({
 
     title : String,
 	description : String,
 	status :String, 
+    subtask : [{ type: Object, ref: 'Subtask'}]
 })
 
 const boardSchema= mongoose.Schema({
@@ -14,6 +19,7 @@ const boardSchema= mongoose.Schema({
 })
 
 var Task= mongoose.model("Task", taskSchema)
+var Subtask=mongoose.model("Subtask",subtaskSchema)
 
 const boardModel=mongoose.model("board",boardSchema)
 
